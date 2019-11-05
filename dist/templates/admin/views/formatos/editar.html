@@ -1,0 +1,123 @@
+  <div class="row">
+      <div class="col-sm-9 col-md-9 col-lg-9">
+        <section class="panel panel-default">
+          <div class="panel-heading">
+            <span>EDITAR FORMATO</span>
+          </div>
+          <div class="panel-body">
+            <p>
+              </p><form name="registerForm" novalidate="">
+                <input class="form-control" type="text" placeholder="Ingrese en nombre del formato" ng-model="form.nombre" name="nombre" ng-minlength="5" required>
+
+                <div ng-messages="registerForm.nombre.$error" ng-if="registerForm.nombre.$dirty" class="msj-error">
+                  <ng-include src="'/templates/common/views/error-list.html'"></ng-include>
+                </div>
+
+                <select class="form-control cls-qdr input-sm capitalize" ng-model="form.modelo" ng-options="modelo.id as modelo.nombre for modelo in modelos" style="margin-top: 5px" ng-change="listaSecciones()">
+                </select>
+
+                <select class="form-control cls-qdr input-sm capitalize" ng-model="form.mina" ng-options="mina.id as mina.nombre for mina in minas" style="margin-top: 5px">
+                </select>
+
+                <select class="form-control cls-qdr input-sm capitalize" ng-model="form.tipoInspeccion" ng-options="item.id as item.nombre for item in tiposInspeccion" style="margin-top: 5px">
+                </select>
+
+              </form>
+            <p></p>
+
+            <p style="margin-top: 5px">
+              <button type="buttom" class="btn btn-danger btn-sm" back-button>
+                  Cancelar
+              </button>
+              <button ng-disabled="registerForm.$invalid" type="buttom" class="btn btn-primary btn-sm" ng-click="editarFormato()">
+                  Actualizar
+              </button>
+
+              </p><div style="clear: both"></div>
+            <p></p>
+
+            <ul class="list-group" style="margin: 0px">
+
+              <li class="list-group-item" ng-repeat="seccion in form.secciones track by $index">
+                <span class="badge glyphicon glyphicon-remove" aria-hidden="true" style="cursor: pointer" ng-click="removerSeccion($index)">
+                </span>
+
+                {{$index + 1 + '. ' + seccion.nombre}}
+
+                <table class="table table-bordered" style="margin-top: 5px">
+                 <tr ng-repeat="row in seccion.contenido.data.content">
+
+                   <td ng-repeat="column in row.content track by $index" height="40">
+
+                    <label ng-if="column.content.obj == 'label'">{{column.content.value}}</label>
+                    <input type="text" ng-if="column.content.obj == 'input-text'">
+                    <input type="text" ng-if="column.content.obj == 'input-num'">
+                    <input type="text" ng-if="column.content.obj == 'input-textnum'">
+                    <select ng-if="column.content.obj == 'input-option'">
+                      <option ng-repeat="item in column.content.options">{{item.value}}</option>
+                    </select>
+                    <input type="checkbox" ng-if="column.content.obj == 'input-check'">
+                   </td>
+
+                 </tr>
+                </table>
+              </li>
+            </ul>
+
+
+          </div>
+        </section>
+      </div>
+
+    <div class="col-sm-3 col-md-3 col-lg-3">
+      <section class="panel panel-default">
+        <div class="panel-heading">
+          <span>SECCIONES</span>
+        </div>
+        <div class="panel-body">
+          <div class="">
+            <ul class="list-unstyled">
+              <li style="border:1px solid #cccccc;
+              margin-bottom: 10px; padding: 5px" ng-repeat="seccion in secciones track by $index">
+                <div class="row">
+                  <div class="col-md-10" style="padding: 2px; margin: 0px">{{seccion.nombre}}</div>
+                  <div class="col-md-2" style="padding: 2px; margin: 0px">
+                    <span class="glyphicon glyphicon-eye-open" title="Ver" ng-click="mdlVerSeccion(seccion)" style="cursor: pointer"></span>
+                    <span class="glyphicon glyphicon-transfer" title="Agregar" ng-click="agregarSeccionAFur(seccion);" style="cursor: pointer"></span>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </div>
+
+  </div>
+  <script type="text/ng-template" id="htmlMostrarSeccion.html">
+    <div class="modal-header">
+      <h4>{{seccion.nombre}}</h4>
+    </div>
+
+    <div class="modal-body" >
+      <table class="table table-bordered" style="margin-top: 5px">
+       <tr ng-repeat="row in seccion.contenido.data.content">
+
+         <td ng-repeat='column in row.content track by $index' height="40">
+
+          <label ng-if="column.content.obj == 'label'">{{column.content.value}}</label>
+          <input type="text" ng-if="column.content.obj == 'input-text'"/>
+          <input type="text" ng-if="column.content.obj == 'input-num'"/>
+          <input type="text" ng-if="column.content.obj == 'input-textnum'"/>
+          <select ng-if="column.content.obj == 'input-option'">
+            <option ng-repeat="item in column.content.options">{{item.value}}</option>
+          </select>
+          <input type="checkbox" ng-if="column.content.obj == 'input-check'"/>
+         </td>
+       </tr>
+      </table>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-default" type="button" ng-click="cancel()">Ok</button>
+    </div>
+  </script>

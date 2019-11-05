@@ -1,0 +1,112 @@
+
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+
+        <ul class="list-unstyled list-inline">
+          <li>
+            <a class="btn btn-default btn-sm ng-binding" data-ui-sref="admin.nuevo-usuario">
+              <i class="fa fa-plus"></i> Agregar usuario
+            </a>
+            <a class="btn btn-default btn-sm ng-binding" ng-click="listaUsuarios()">
+              <i class="fa fa-refresh"></i> Actualizar lista
+            </a>
+            <a class="btn btn-default btn-sm ng-binding" ng-click="generarExcel()">
+              <i class="fa fa-refresh"></i> Descargar Excel
+            </a>
+          </li>
+          <li><span class="text-muted">|</span></li>
+
+          <li>
+              <input type="text" placeholder="Buscar por nombres, apellidos o teléfono." style="width: 300px" class="form-control input-sm" ng-model="f">
+           </li>
+
+        </ul>
+
+      </div>
+      <div class="panel-body">
+
+        <table class="table table-bordered">
+            <thead>
+              <tr>
+                  <th>#</th>
+                  <th>Usuario</th>
+                  <th>Nombres</th>
+                  <th>Mina</th>
+                  <th>Correo</th>
+                  <th>Tel&eacute;fono</th>
+                  <th>Tipo Usuario</th>
+                  <th class="text-center">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in lista | filter:f">
+
+                  <td>{{$index + 1}}</td>
+                  <td>{{item.usuario}}</td>
+                  <td>{{item.nombres + ' ' + item.apellidos}}</td>
+                  <td>{{item.mina.nombre}}</td>
+                  <td>{{item.correo}}</td>
+                  <td>{{item.telefono}}</td>
+
+                  <td>
+                    <div class="label label-primary" ng-if="item.tipoUsuario == 'ADM'">Administrador</div>
+                    <div class="label label-primary" ng-if="item.tipoUsuario == 'INS'">Inspector</div>
+                    <div class="label label-primary" ng-if="item.tipoUsuario == 'SOP'">Soporte Marco</div>
+                    <div class="label label-primary" ng-if="item.tipoUsuario == 'SUP'">Supervisor Marco</div>
+                    <div class="label label-primary" ng-if="item.tipoUsuario == 'CLI'">Supervisor Mina</div>
+                  </td>
+
+                  <td class="text-center">
+
+                      <a href="/#/usuario/{{item.id}}">
+                        <i class="fa fa-lg fa-edit mpointer text-muted" title="Editar">
+                        </i>
+                      </a>
+
+                      <i ng-if="item.tipoUsuario != 'ADM'" class="fa fa-lg fa-trash mpointer text-muted" ng-click="eliminarUsuario(item.id)" title="Eliminar">
+                      </i>
+
+                      <i class="fa fa-lg fa-undo mpointer text-muted" ng-click="mdlCambiarClave(item.id, item.nombres)" title="Cambiar clave">
+                      </i>
+
+                  </td>
+              </tr>
+            </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+
+  <script type="text/ng-template" id="htmlCambiarClave.html">
+
+    <form name="registerForm" novalidate="" ng-submit="registrarUsuario()">
+
+      <div class="modal-header"><h4>Cambiar contraseña de {{usuario}}</h4></div>
+
+      <div class="modal-body" >
+
+          <input type="password" placeholder="Contraseña" class=" form-control"
+            name="clave"
+            ng-minlength="6"
+            ng-maxlength="20"
+            ng-model="form.clave"
+            required=""
+          />
+
+          <div ng-messages="registerForm.clave.$error" ng-if="registerForm.clave.$dirty" class="msj-error">
+            <ng-include src="'/templates/common/views/error-list.html'"></ng-include>
+          </div>
+
+      </div>
+      <div class="modal-footer">
+          <button class="btn btn-primary" type="button" ng-click="ok()" ng-disabled="registerForm.$invalid">Actualizar</button>
+          <button class="btn btn-warning" type="button" ng-click="cancel()">Cancelar</button>
+      </div>
+    </form>
+  </script>
+
+</div>

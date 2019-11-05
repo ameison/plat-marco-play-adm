@@ -1,0 +1,79 @@
+
+<div class="row alerts-container"  data-ng-show="alerts.length">
+  <div class="col-xs-12">
+    <uib-alert data-ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>
+  </div>
+</div>
+
+<div class="row">
+
+  <div class="col-lg-12 col-md-12 col-xs-12">
+
+    <ul class="list-unstyled list-inline">
+      <li ng-if="tipoUsuario != 'CLI' && tipoUsuario != 'INS'">
+        <div class="form-inline">
+          <div class="form-group">
+            <label>Seleccione una mina &nbsp;&nbsp;&nbsp;</label>
+            <select class="form-control cls-qdr input-sm capitalize"
+                    ng-model="form.mina"
+                    ng-options='mina.id as mina.nombre for mina in minas'>
+            </select>
+          </div>
+        </div>
+      </li>
+      <li ng-if="tipoUsuario != 'CLI' && tipoUsuario != 'INS'">
+        <a class="btn btn-default btn-sm ng-binding" ng-click="getEstadistica()">
+          <i class="fa fa-refresh"></i> Obtener inspecciones SCL y Eventos
+        </a>
+      </li>
+    </ul>
+
+  </div>
+
+</div>
+
+<div class="row">
+	<div class="col-lg-6 col-md-6 col-xs-6">
+
+    <h4>Inspecciones SCL</h4>
+
+    <ul class="list-unstyled list-inline">
+      <li>
+        <div class="form-inline">
+          <div class="checkbox" ng-repeat="categoria in categorias">
+            <label>
+              <input style="margin-right: 5px" ng-model="categoria.checked" type="checkbox">{{categoria.nombre}}&nbsp;&nbsp;&nbsp;&nbsp;
+            </label>
+          </div>
+        </div>
+      </li>
+      <li style="margin-top: 5px">
+        <a class="btn btn-default btn-sm ng-binding" ng-click="mostrarEstadisticaSCLDias()">
+          <i class="fa fa-refresh"></i> Buscar equipos por categorias seleccionadas
+        </a>
+      </li>
+    </ul>
+
+    <canvas id="bar" class="chart chart-horizontal-bar"
+      chart-data="data_dias" chart-labels="labels_dias" chart-colors="colors_dias">
+    </canvas>
+
+	</div>
+
+  <div class="col-lg-6 col-md-6 col-xs-6">
+
+
+      <h4>Inspecciones SCL</h4>
+
+      <canvas id="bar" class="chart chart-bar" height="140"
+        chart-data="data_scl" chart-labels="labels_scl" chart-colors="colors_scl">
+      </canvas>
+
+      <h4>Eventos</h4>
+      <canvas id="bar" class="chart chart-bar" height="140"
+        chart-data="data_co" chart-labels="labels_co" chart-series="series_co" chart-colors="colors_co">
+      </canvas>
+
+	</div>
+
+</div>

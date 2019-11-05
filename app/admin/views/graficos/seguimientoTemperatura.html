@@ -1,0 +1,78 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <ul class="list-unstyled list-inline">
+
+          <li ng-if="tipoUsuario != 'CLI'">
+            <div class="form-inline">
+              <div class="form-group">
+                <label>Minas</label>
+                <select class="form-control cls-qdr input-sm capitalize"
+                        ng-model="form.mina"
+                        ng-options='mina.id as mina.nombre for mina in minas'>
+                </select>
+              </div>
+            </div>
+          </li>
+
+          <!-- <li><span class="text-muted">|</span></li> -->
+
+          <li>
+            <a class="btn btn-default btn-sm ng-binding" ng-click="obtenerGrafico()">
+              <i class="fa fa-refresh"></i> Buscar
+            </a>
+          </li>
+
+        </ul>
+        <ul class="list-unstyled list-inline">
+          <li>
+            <div class="form-inline">
+              <div class="checkbox" ng-repeat="categoria in categorias">
+                <label>
+                  <input style="margin-right: 5px" ng-model="categoria.checked" type="checkbox">{{categoria.nombre}}&nbsp;&nbsp;&nbsp;&nbsp;
+                </label>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="panel-body">
+
+        <table class="table table-bordered">
+            <thead>
+              <tr>
+                  <th>#</th>
+                  <th>Equipo</th>
+                  <th>&Uacute;ltima intevenvi&oacute;n</th>
+                  <th>Dias</th>
+                  <th>Estado</th>
+                  <th class="text-center">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in seguimientos">
+                <td>{{$index + 1}}</td>
+                <td>{{item.equipo}}</td>
+                <td>{{item.ultima_intervencion}}
+                <td>{{item.dias}}</td>
+                <td>
+                  <div class="label label-primary" ng-if="item.estado == 'optimo'">OPTIMO</div>
+                  <div class="label label-warning" ng-if="item.estado == 'normal'">NORMAL</div>
+                  <div class="label label-danger" ng-if="item.estado == 'critico'">CRITICO</div>
+                </td>
+                <td class="text-center">
+                  <i class="glyphicon glyphicon-download-alt" style="cursor: pointer" title="Generar reporte" ng-click="generarExcel(item.equipo_id)">
+                  </i>
+                </td>
+              </tr>
+            </tbody>
+        </table>
+
+      </div>
+
+    </div>
+  </div>
+
+</div>

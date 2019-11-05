@@ -1,0 +1,99 @@
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-9 col-md-9 col-lg-6">
+          <section class="panel panel-default">
+            <div class="panel-heading">
+              <ul class="list-unstyled">
+                <li><h4 class="capitalize"><strong>REGISTRO DE EQUIPOS</strong></h4></li>
+              </ul>
+            </div>
+            <div class="panel-body">
+
+              <form name="registerForm" novalidate="" ng-submit="registrarEquipo()">
+
+                    <table class="table table-bordered">
+                      <tr>
+                        <td class="text-right"><label for=""> Nombres</label></td>
+                        <td><input class="form-control" placeholder="Nombre" name="nombre" ng-model="form.nombre" ng-minlength="2" required>
+
+                          <div ng-messages="registerForm.nombre.$error" ng-if="registerForm.nombre.$dirty" class="msj-error">
+                            <ng-include src="'/templates/common/views/error-list.html'"></ng-include>
+                          </div>
+
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td class="text-right"><label for="">Mina</label></td>
+                        <td>
+                          <select class="form-control cls-qdr input-sm capitalize" ng-model="form.mina" ng-options="option.id as option.nombre for option in minas" ng-change="listaSuperintendencias(form.mina)">
+                          </select>
+
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td class="text-right"><label for="">Superintendencia</label></td>
+                        <td>
+                          <select class="form-control cls-qdr input-sm capitalize" ng-model="form.superintendencia" ng-options="option.id as option.nombre for option in superintendencias">
+                          </select>
+
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td class="text-right"><label for="">Modelo</label></td>
+                        <td>
+                          <select class="form-control cls-qdr input-sm capitalize" ng-model="form.modelo" ng-options="option.id as option.nombre for option in modelos">
+                          </select>
+
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td class="text-right">
+                          <label for="">Seguimiento de inspecciones (D&iacute;as)</label>
+                        </td>
+                        <td>
+                          <div>
+                            0
+
+                            <input required ng-minlength="1" type="number" name="diasOptimo" ng-model="form.diasOptimo" style="margin-bottom: 4px; margin-left: 20%; width: 50px">
+
+                            <input required ng-minlength="1" type="number" name="diasCritico" ng-model="form.diasCritico" style="margin-bottom: 4px; margin-left: 17%; width: 50px">
+
+                            <label style="float: right">&infin;</label>
+
+                            <div style="clear: both"></div>
+                          </div>
+                          <div class="progress">
+                            <div class="progress-bar progress-bar-success" style="width: 33%">Optimo</div>
+                            <div class="progress-bar progress-bar-warning" style="width: 33%">Alerta</div>
+                            <div class="progress-bar progress-bar-danger" style="width: 34%">Critico</div>
+                          </div>
+
+                          <div ng-messages="editForm.diasOptimo.$error" ng-if="form.diasOptimo.$dirty" class="msj-error">
+                            <ng-include src="'/templates/common/views/error-list.html'"></ng-include>
+                          </div>
+                          <div ng-messages="editForm.diasCritico.$error" ng-if="form.diasCritico.$dirty" class="msj-error">
+                            <ng-include src="'/templates/common/views/error-list.html'"></ng-include>
+                          </div>
+
+                        </td>
+                      </tr>
+
+                    </table>
+
+                    <section class="text-right">
+                        <button type="submit" class="btn btn-primary btn-sm" ng-disabled="registerForm.$invalid">
+                            Registrar
+                        </button>
+                        <button type="button" class="btn btn-default btn-sm" back-button>Cancelar</button>
+                    </section>
+
+
+              </form>
+            </div>
+          </section>
+        </div>
+    </div>

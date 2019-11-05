@@ -1,0 +1,48 @@
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-9 col-md-9 col-lg-6">
+          <section class="panel panel-default">
+            <div class="panel-heading">
+              <ul class="list-unstyled">
+                <li><h4 class="capitalize"><strong>EDICI&Oacute;N DE MODELOS</strong></h4></li>
+              </ul>
+            </div>
+            <div class="panel-body">
+
+              <form name="editForm" novalidate="" ng-submit="editarModelo()">
+
+                    <table class="table table-bordered">
+                      <tr>
+                        <td class="text-right"><label for=""> Nombres</label></td>
+                        <td><input class="form-control" placeholder="Nombre" name="nombre" ng-model="form.nombre" ng-minlength="2" required>
+
+                          <div ng-messages="editForm.nombre.$error" ng-if="editForm.nombre.$dirty" class="msj-error">
+                            <ng-include src="'/templates/common/views/error-list.html'"></ng-include>
+                          </div>
+
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td class="text-right"><label for="">Categoria</label></td>
+                        <td>
+                          <select class="form-control cls-qdr input-sm capitalize" ng-model="form.categoria" ng-options="option.id as option.nombre for option in categorias">
+                          </select>
+                        </td>
+                      </tr>
+
+                    </table>
+
+                    <section class="text-right">
+                        <button type="submit" class="btn btn-primary btn-sm" ng-disabled="editForm.$invalid">
+                            Actualizar
+                        </button>
+                        <button type="button" class="btn btn-danger btn-sm" back-button>Cancelar</button>
+                    </section>
+
+
+              </form>
+            </div>
+          </section>
+        </div>
+    </div>

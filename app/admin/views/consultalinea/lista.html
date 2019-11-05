@@ -1,0 +1,138 @@
+<style>
+  .row_opened{
+    color: red;
+  }
+  .row_closed{
+    color: blue;
+  }
+</style>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <ul class="list-unstyled list-inline">
+          <li ng-if="tipoUsuario != 'CLI'">
+            <div class="form-inline">
+              <div class="form-group">
+                <label>Mina</label>
+                <select class="form-control cls-qdr input-sm capitalize"
+                        ng-model="form.mina"
+                        ng-options='mina.id as mina.nombre for mina in minas'
+                        ng-change='listaSuperintendencias(form.mina)'>
+                </select>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="form-inline">
+              <div class="form-group">
+                <label>Superintendencia</label>
+                <select class="form-control cls-qdr input-sm capitalize"
+                        ng-model="form.superintendencia"
+                        ng-options='superintendencia.id as superintendencia.nombre for superintendencia in superintendencias'>
+                </select>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="form-inline">
+              <div class="form-group">
+                <label>Tipo de inspecci&oacute;n</label>
+                <select class="form-control cls-qdr input-sm capitalize"
+                        ng-model="form.tipo"
+                        ng-options='tipo.id as tipo.nombre for tipo in tipos'>
+                </select>
+
+              </div>
+            </div>
+          </li>
+
+          <li><span class="text-muted">|</span></li>
+
+          <li>
+              <input type="text"
+              placeholder="Buscar inspección."
+              style="width: 300px"
+              class="form-control input-sm"
+              ng-model="f">
+           </li>
+
+        </ul>
+
+        <ul class="list-unstyled list-inline">
+          <li>
+            <div class="form-inline">
+              <div class="form-group">
+                <label>Rangos de fecha de las inspección</label>
+                <input date-range-picker class="form-control date-picker" type="text" ng-model="datePicker.date" />
+                <button class="btn btn-default btn-sm" ng-click="listaConsultaLinea()">
+                  <i class="fa fa-refresh"></i>
+                </button>
+              </div>
+            </div>
+          </li>
+        </ul>
+
+      </div>
+      <div class="panel-body">
+
+        <table class="table table-bordered">
+            <thead>
+              <tr>
+                  <th>#</th>
+                  <th>C&oacute;digo</th>
+                  <!-- <th>Superintendencia</th> -->
+                  <th>Fecha</th>
+                  <th>Equipo</th>
+                  <th>Prioridad</th>
+                  <th>Estado</th>
+                  <th class="text-center">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in inspecciones | filter:f" ng-class="{row_opened: (item.inspeccionCerrada == null && item.tipo == 'MC'), row_closed: (item.inspeccionCerrada != null && item.tipo == 'MC')}" >
+
+                 <!-- && item.tipo='MC' -->
+
+                <td>{{$index + 1}}</td>
+                <td>{{'SIG' + item.id}}</td>
+                <!-- <td>{{item.equipo.superintendencia.mina.nombre + ' - ' + item.equipo.superintendencia.nombre}}</td> -->
+                <td>{{item.fechaCreacion | date }}</td>
+                <td>{{item.equipo.nombre}}</td>
+                <td>
+                  <div class="label label-danger" ng-if="item.prioridad == 'AL'">Alta</div>
+                  <div class="label label-warning" ng-if="item.prioridad == 'NO'">Normal</div>
+                  <div class="label label-default" ng-if="item.prioridad == 'BA'">Baja</div>
+                </td>
+
+                <td>
+                  <div class="label label-primary" ng-if="item.estado == 'P'">Progreso</div>
+                  <div class="label label-warning" ng-if="item.estado == 'O'">Observado</div>
+                  <div class="label label-success" ng-if="item.estado == 'F'">Finalizada</div>
+                </td>
+
+                <td class="text-center">
+                  <a ng-if="((tipoUsuario == 'SOP' || tipoUsuario == 'SUP') && minaId == item.equipo.superintendencia.mina.id) || tipoUsuario == 'ADM'" href="/#/inspeccion/{{item.id}}">
+                    <i class="fa fa-lg fa-edit mpointer text-muted"
+                     title="Ver inspección">
+                    </i>
+                  </a>
+                  <i ng-if="tipoUsuario != 'CLI' || (item.estado == 'F' || item.tipo == 'MC')" class="glyphicon glyphicon-save-file mpointer text-muted"
+                      ng-click="generarPdf(item.id)"
+                      title="Descargar inspección PDF">
+                  </i>
+                  <i ng-if="tipoUsuario == 'ADM' || tipoUsuario == 'SOP' || tipoUsuario == 'SUP'" class="glyphicon glyphicon-trash mpointer text-muted"
+                      ng-click="eliminarInspeccion(item.id)"
+                      title="Eliminar inspección">
+                  </i>
+                </td>
+              </tr>
+            </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+
+</div>

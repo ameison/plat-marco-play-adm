@@ -1,0 +1,83 @@
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-9 col-md-9 col-lg-6">
+          <section class="panel panel-default">
+            <div class="panel-heading">
+              <ul class="list-unstyled">
+                <li><h4 class="capitalize"><strong>EDICI&Oacute;N DE USUARIO</strong></h4></li>
+              </ul>
+            </div>
+            <div class="panel-body">
+
+              <form name="registerForm" novalidate="" ng-submit="editarUsuario()">
+
+                    <table class="table table-bordered">
+                      <tr>
+                        <td class="text-right"><label for=""> Nombres</label></td>
+                        <td><input class="form-control" placeholder="Nombres" name="nombre" ng-model="form.nombres" ng-minlength="2" required>
+
+                          <div ng-messages="registerForm.nombre.$error" ng-if="registerForm.nombre.$dirty" class="msj-error">
+                            <ng-include src="'/templates/common/views/error-list.html'"></ng-include>
+                          </div>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td class="text-right"><label for=""> Apellidos </label></td>
+                        <td><input placeholder="Apellidos" class="form-control" ng-model="form.apellidos" name="apellidos" ng-model="form.nombre" ng-minlength="2" required>
+
+                          <div ng-messages="registerForm.apellidos.$error" ng-if="registerForm.apellidos.$dirty" class="msj-error">
+                            <ng-include src="'/templates/common/views/error-list.html'"></ng-include>
+                          </div>
+
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="text-right"><label for="">Mina</label></td>
+                        <td>
+                          <select class="form-control cls-qdr input-sm capitalize" ng-model="form.mina" ng-options="option.id as option.nombre for option in minas">
+                          </select>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="text-right"><label for=""> Tipo de usuario</label></td>
+                        <td>
+                          <select class="form-control cls-qdr input-sm capitalize" ng-model="form.tipoUsuario" ng-options="option.id as option.nombre for option in tiposUsuario">
+                          </select>
+
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="text-right"><label for=""> Tel&eacute;fono</label></td>
+                        <td>
+                          <input type="number" class="form-control" name="telefono" ng-model="form.telefono" ng-min="100000" ng-max="1000000000" required>
+                          <div ng-messages="registerForm.telefono.$error" ng-if="registerForm.telefono.$dirty" class="msj-error">
+                            <ng-include src="'/templates/common/views/error-list.html'"></ng-include>
+                          </div>
+
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="text-right"><label for=""> Correo</label></td>
+                        <td><input type="email" placeholder="Correo" class="form-control" name="correo" required ng-model="form.correo">
+                          <div ng-messages="registerForm.correo.$error" ng-if="registerForm.correo.$dirty" class="msj-error">
+                            <ng-include src="'/templates/common/views/error-list.html'"></ng-include>
+                          </div>
+                        </td>
+                      </tr>
+
+                    </table>
+
+                    <section class="text-right">
+                        <button type="submit" class="btn btn-primary btn-sm" ng-disabled="registerForm.$invalid">
+                            Actualizar
+                        </button>
+                        <button type="button" class="btn btn-danger btn-sm" back-button>Cancelar</button>
+                    </section>
+
+
+              </form>
+            </div>
+          </section>
+        </div>
+    </div>

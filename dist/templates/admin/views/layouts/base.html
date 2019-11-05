@@ -1,0 +1,17 @@
+
+
+    <div id="page-wrapper" ng-class="{'open': toggle}" ng-cloak>
+
+      <ng-include src="'/templates/admin/views/layouts/sidebar.html'"></ng-include>
+
+      <div id="content-wrapper">
+        <div class="page-content">
+
+          <ng-include src="'/templates/admin/views/layouts/header.html'"></ng-include>
+          <!-- Main Content -->
+          <div id="content-app" ui-view="content@app"></div>
+
+        </div><!-- End Page Content -->
+      </div><!-- End Content Wrapper -->
+
+    </div><!-- End Page Wrapper -->

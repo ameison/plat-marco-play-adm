@@ -1,0 +1,85 @@
+
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+
+        <ul class="list-unstyled list-inline">
+          <li>
+            <a class="btn btn-default btn-sm ng-binding" data-ui-sref="admin.nuevo-equipo" >
+              <i class="fa fa-plus"></i> Agregar Equipo
+            </a>
+            <a class="btn btn-default btn-sm ng-binding" ng-click="listaEquipos()">
+              <i class="fa fa-refresh"></i> Actualizar lista
+            </a>
+          </li>
+          <li><span class="text-muted">|</span></li>
+          <li>
+            <div class="form-inline">
+              <div class="form-group">
+                <label>Mina</label>
+                <select class="form-control cls-qdr input-sm capitalize"
+                        ng-model="form.mina"
+                        ng-options='mina.id as mina.nombre for mina in minas'>
+                </select>
+                <button class="btn btn-default btn-sm" ng-click="listaEquiposXMina()">
+                  <i class="fa fa-refresh"></i>
+                </button>
+              </div>
+            </div>
+          </li>
+          <li><span class="text-muted">|</span></li>
+          <li>
+              <input type="text" placeholder="Buscar nombre." style="width: 300px"
+              class="form-control input-sm"
+              ng-model="f"
+              min="0">
+          </li>
+        </ul>
+
+      </div>
+      <div class="panel-body">
+
+        <table class="table table-bordered">
+            <thead>
+              <tr>
+                  <th>#</th>
+                  <th>Equipo</th>
+                  <th>Superintendencia</th>
+                  <th>Modelo</th>
+                  <th>Estado</th>
+                  <th class="text-center">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in lista | filter:f">
+                  <td>{{$index + 1}}</td>
+                  <td>{{item.nombre}}</td>
+                  <td>{{item.superintendencia.nombre + ' - ' + item.superintendencia.mina.nombre}}</td>
+                  <td>{{item.modelo.nombre + ' - ' + item.modelo.categoria.nombre}}</td>
+                  <td>
+                    <div class="label label-primary" ng-if="item.estado == 'A'">Activo</div>
+                    <div class="label label-warning" ng-if="item.estado == 'I'">Inactivo</div>
+                  </td>
+
+                  <td class="text-center">
+                    <a href="/#/equipo/{{item.id}}">
+                      <i class="fa fa-lg fa-edit mpointer text-muted"
+                        title="Editar">
+                      </i>
+                    </a>
+                    <i class="fa fa-lg fa-trash mpointer text-muted"
+                        ng-click="eliminarEquipo(item.id)"
+                        title="Eliminar">
+                    </i>
+                  </td>
+              </tr>
+            </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+
+</div>

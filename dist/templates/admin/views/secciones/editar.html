@@ -1,0 +1,137 @@
+<div class="row">
+    <div class="col-sm-9 col-md-9 col-lg-9">
+      <section class="panel panel-default">
+        <div class="panel-heading">
+          <span>SECCI&Oacute;N</span>
+        </div>
+        <div class="panel-body">
+          <p>
+            </p><form name="registerForm" novalidate="">
+              <input class="form-control" type="text" placeholder="Ingrese en nombre de la sección" ng-model="nombre" name="nombre" ng-minlength="5" required>
+
+              <select class="form-control cls-qdr input-sm capitalize" ng-model="modelo" ng-options="option.id as option.nombre for option in modelos">
+              </select>
+
+              <div ng-messages="registerForm.nombre.$error" ng-if="registerForm.nombre.$dirty" class="msj-error">
+                <ng-include src="'/templates/common/views/error-list.html'"></ng-include>
+              </div>
+            </form>
+          <p></p>
+
+          <div class="form-inline">
+            <div class="checkbox">
+              <label>
+                <input style="margin-bottom: 20px" ng-model="reporteTemperatura" type="checkbox">Habilitar esta secci&oacute;n para el reporte de temperatura.
+              </label>
+            </div>
+          </div>
+
+          <table class="table table-bordered">
+           <tr ng-repeat="row in seccion.content">
+
+             <td ng-repeat="column in row.content track by $index" height="40" ui-on-drop="onDropT($event,$data,$parent.$index,$index)" ng-click="agregarASeleccion($parent.$index,$index)" ng-style="column.selected && {'background-color': 'AliceBlue'}">
+
+              <label ng-if="column.content.obj == 'label'">{{column.content.value}}</label>
+              <input type="text" ng-if="column.content.obj == 'input-text'">
+              <input type="text" ng-if="column.content.obj == 'input-num'">
+              <input type="text" ng-if="column.content.obj == 'input-textnum'">
+              <select ng-if="column.content.obj == 'input-option'">
+                <option ng-repeat="item in column.content.options">{{item.value}}</option>
+              </select>
+
+              <div class="btn-group" uib-dropdown is-open="status.isopen" ng-if="column.content.obj == 'input-option-ico'">
+                <button id="single-button" type="button" class="btn btn-light" uib-dropdown-toggle ng-disabled="disabled">
+                  Opciones <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                  <li role="menuitem" ng-repeat="item in column.content.options">
+                    <a style="color: #FFFF00" ng-if="item.value=='alerta'" href="javascript:void(0);" class="glyphicon glyphicon-alert"></a>
+                    <a style="color: #92D050" ng-if="item.value=='bueno'" href="javascript:void(0);" class="glyphicon glyphicon-ok"></a>
+                    <a style="color: #FF0000" ng-if="item.value=='malo'" href="javascript:void(0);" class="glyphicon glyphicon-remove"></a>
+                  </li>
+                </ul>
+              </div>
+
+              <input type="checkbox" ng-if="column.content.obj == 'input-check'">
+             </td>
+           </tr>
+          </table>
+
+
+          <div class="form-group">
+            <img data-ng-src="data:image/png;base64,{{imagenAyuda}}" style="margin-bottom: 5px">
+            <input type="file" ng-model="imagen" name="file" base-sixty-four-input parser="nuevaImagen">
+            <p class="help-block">Imagen de ayuda para esta secci&oacute;n.</p>
+          </div>
+
+          <p>
+            <button type="buttom" class="btn btn-danger btn-sm" back-button>
+                Cancelar
+            </button>
+            <button ng-disabled="registerForm.$invalid || seccion.content == undefined" type="buttom" class="btn btn-primary btn-sm" ng-click="actualizarSeccion()">
+                Actualizar
+            </button>
+            <button style="float: right" ng-if="seleccinados.length > 0" type="buttom" class="btn btn-danger btn-sm" ng-click="eliminarSeleccionados()">
+                Borrar {{ seleccinados.length > 1 ? seleccinados.length + ' elementos seleccionados' : seleccinados.length + ' elemento seleccionado' }}
+            </button>
+            </p><div style="clear: both"></div>
+          <p></p>
+        </div>
+      </section>
+    </div>
+
+    <div class="col-sm-3 col-md-3 col-lg-3">
+
+      <section class="panel panel-default">
+        <div class="panel-heading">
+          <span>COMPONENTES</span>
+        </div>
+        <div class="panel-body">
+          <div class="">
+            <ul class="list-unstyled">
+              <li style="border:1px solid #cccccc;
+              margin-bottom: 10px; padding: 5px" ng-repeat="c in componentes track by $index">
+
+                <div class="row">
+                  <div class="col-md-11" style="padding: 2px; margin: 0px">{{c.nombre}}</div>
+                  <div class="col-md-1" style="padding: 2px; margin: 0px">
+                    <span class="glyphicon glyphicon-move" ui-draggable="true" drag="c" on-drop-success="dropSuccessHandler($event,$index,componentes)" style="cursor: move"></span>
+                  </div>
+                </div>
+
+                <div ng-if="c.contenido.data.obj == 'label'" class="row">
+                  <div class="col-md-12" style="padding: 0px; margin: 0px">
+                    <textarea class="form-control" rows="2" placeholder="Ingrese en texto" ng-model="c.contenido.data.value"></textarea>
+                  </div>
+                </div>
+                <div ng-if="c.contenido.data.obj == 'input-option'">
+                  <div class="row">
+                    <div class="col-md-8" style="padding: 2px; margin: 0px">
+                      <input class="form-control" type="text" placeholder="Ingrese nueva opción" name="nuevoItem" ng-model="nuevoItem">
+                    </div>
+                    <div class="col-md-4" style="padding: 2px; margin: 0px">
+                      <button class="form-control" type="buttom" class="btn btn-primary btn-sm" ng-click="guardarConfiguracion(nuevoItem, $index)">
+                        Agregar
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="row" ng-if="c.contenido.data.options.length > 0">
+                    <div class="col-md-12" style="padding: 0px; margin: 0px">
+                      <ul class="list-group" style="margin: 0px">
+                        <li class="list-group-item" ng-repeat="option in c.contenido.data.options track by $index">
+                          <span class="badge glyphicon glyphicon-remove" aria-hidden="true" style="cursor: pointer" ng-click="removerItemOption($parent.$index, $index)">
+                          </span>
+                          {{$index + 1 + '. ' + option.value}}
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </div>
+</div>

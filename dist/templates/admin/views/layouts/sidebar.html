@@ -1,0 +1,28 @@
+<div id="sidebar-wrapper">
+  <ul class="sidebar">
+
+    <li class="sidebar-main">
+      <a ng-click="toggleSidebar()">
+        <p style="float: left">
+          <img src="img/logo.png" alt="logo" style="height: 30px">
+          Sigeslub
+        </p>
+
+        <span class="menu-icon glyphicon glyphicon-menu-hamburger"></span>
+      </a>
+    </li>
+
+    <li class="sidebar-list" ng-repeat="item in menu.items">
+      <a ng-if="item.items.length == 0" ui-sref="{{item.sref}}"> <span class="menu-icon {{item.icon}}"></span> {{item.title}}</a>
+      <div ng-controller="CollapseDemoCtrl" ng-if="item.items.length > 0">
+        <a ng-click="isCollapsed = !isCollapsed" class="mpointer">{{item.title}}<span class="menu-icon {{item.icon}}"></span></a>
+        <div uib-collapse="isCollapsed">
+          <div class="sub-menu">
+            <a style="padding-left: 10px; background-color: #006CA2" ng-repeat="sub_item in item.items" ui-sref="{{sub_item.sref}}"> <span class="menu-icon {{sub_item.icon}}"></span> {{sub_item.title}}</a>
+          </div>
+        </div>
+      </div>
+    </li>
+
+  </ul>
+</div>

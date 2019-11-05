@@ -1,0 +1,45 @@
+<div id="page-login">
+
+  <div class="row">
+    <div class="col-md-4 col-md-offset-4">
+      <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row text-center">
+              <img src="img/logo-principal.png" alt="" />
+            </div>
+            <form name="registerForm" novalidate="">
+              <div class="row">
+                <div class="col-md-10 col-md-offset-1" style="margin-bottom: 5px;margin-top: 15px;">
+                  <input type="text" name="usuario" class="form-control form-control-sm"
+                  ng-model="user.usuario" placeholder="Usuario" ng-minlength="3" required />
+
+                  <div ng-messages="registerForm.usuario.$error" ng-if="registerForm.usuario.$dirty" class="msj-error">
+                    <ng-include src="'/templates/common/views/error-list.html'"></ng-include>
+                  </div>
+
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                  <input type="password" name="clave" class="form-control form-control-sm" ng-model="user.clave"
+                  placeholder="Contraseña" ng-minlength="5" required my-enter="login()"/>
+                  <div ng-messages="registerForm.clave.$error" ng-if="registerForm.clave.$dirty" class="msj-error">
+                    <ng-include src="'/templates/common/views/error-list.html'"></ng-include>
+                  </div>
+                </div>
+              </div>
+            </form>
+
+            <div class="row">
+              <div class="col-md-10 col-md-offset-1">
+                <input type="button" class="btn btn-primary btn-block" ng-disabled="registerForm.$invalid"
+                ng-click="login()" my-enter="login()" value="Iniciar sesión">
+              </div>
+            </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

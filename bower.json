@@ -1,0 +1,41 @@
+{
+  "name": "angular-template",
+  "version": "1.0",
+  "description": "AngularJS implementation of Abcdroid Web Apps",
+  "homepage": "https://github.com/abcdroid/template-admin",
+  "authors": [
+    "Meison Chirinos <achirinos@abcdroid.pe>"
+  ],
+  "contributors": [
+    "Meison Chirinos <achirinos@abcdroid.pe>",
+    "Ronald Villegas <rvillegas@abcdroid.pe>"
+  ],
+  "main": "index.html",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.5.0",
+    "angular-cookies": "~1.5.0",
+    "angular-bootstrap": "~1.0.3",
+    "angular-ui-router": "^0.2.15",
+    "bootstrap": "~3.3.6",
+    "font-awesome": "~4.5.0",
+    "ngstorage": "~0.3.11",
+    "satellizer": "~0.13.4",
+    "angular-messages": "^1.5.8",
+    "angular-native-dragdrop": "^1.2.2",
+    "angular-base64-upload": "^0.1.19",
+    "angular-moment": "^1.0.0",
+    "angular-daterangepicker": "^0.2.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/abcdroid/angular-template"
+  }
+}

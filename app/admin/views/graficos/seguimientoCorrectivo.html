@@ -1,0 +1,83 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <ul class="list-unstyled list-inline">
+          <li ng-if="tipoUsuario != 'CLI'">
+            <div class="form-inline">
+              <div class="form-group">
+                <label>Minas</label>
+                <select class="form-control cls-qdr input-sm capitalize"
+                        ng-model="form.mina"
+                        ng-options='mina.id as mina.nombre for mina in minas'>
+                </select>
+              </div>
+            </div>
+          </li>
+
+          <!-- <li><span class="text-muted">|</span></li> -->
+
+          <li>
+            <a class="btn btn-default btn-sm ng-binding" ng-click="obtenerGrafico()">
+              <i class="fa fa-refresh"></i> Buscar
+            </a>
+          </li>
+
+          <li>
+            <a class="btn btn-default btn-sm ng-binding" ng-click="descargarHistorial()">
+              <i class="glyphicon glyphicon-download-alt"></i> Descargar historial
+            </a>
+          </li>
+
+          <li ng-if="seguimientos.length > 0">
+            <i style="cursor: pointer" class="glyphicon glyphicon-download-alt" ng-click="descargarExcel()" title="Descargar en formato excel">
+            </i>
+          </li>
+
+        </ul>
+        <ul class="list-unstyled list-inline">
+          <li>
+            <div class="form-inline">
+              <div class="checkbox" ng-repeat="categoria in categorias">
+                <label>
+                  <input style="margin-right: 5px" ng-model="categoria.checked" type="checkbox">{{categoria.nombre}}&nbsp;&nbsp;&nbsp;&nbsp;
+                </label>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="panel-body">
+
+        <table class="table table-bordered">
+            <thead>
+              <tr>
+                  <th>#</th>
+                  <th>Equipo</th>
+                  <th>Inspecci&oacute;n</th>
+                  <th>Resumen</th>
+                  <th>Fecha Apertura</th>
+                  <th>Fecha cierre</th>
+                  <th>D&iacute;as</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in seguimientos">
+                <td>{{$index + 1}}</td>
+                <td>{{item.equipo}}</td>
+                <td>{{'SIG' + item.inspeccion_id}}</td>
+                <td>{{item.resumen_actividad}}</td>
+                <td>{{item.fecha_apertura}}</td>
+                <td>{{item.fecha_cierre}}</td>
+                <td>{{item.dias}}</td>
+              </tr>
+            </tbody>
+        </table>
+
+      </div>
+
+    </div>
+  </div>
+
+</div>
